@@ -114,14 +114,7 @@
                     videoDetails += " (Season " + String($("#nos").val()) + ")";
                     videoDetails += "\n📙 Language : " + $("#lang").val() + "\n" + "💿 Quality : FULL HD \n" + "📤 Uploader : @ShowsHeist\n\n\n";
                 }
-
-
-                var fileNamePrefix = "SH" + String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val().slice(-2) + "_" + $('#cn').val();
-                if ($("#typeofvideo").val() == "Webseries") {
-                    fileNamePrefix + "S" + String("0" + $('nos').val()).slice(-2)
-                }
-
-
+                var fileNamePrefix = getVideoCode();
                 mainText += fileNamePrefix + "\n\n" + videoDetails;
 
                 var linkDetails = "";
@@ -177,18 +170,21 @@
             }
 
             $("#copy").click(function() {
-                code = getCode();
+                code = getVideoCode();
                 if(code !== undefined ){
+                    copy(code);                    
                     alert("Copied : \n" + code);
                 }
                 
             });
 
-            function getCode() {
+            function getVideoCode() {
+                var code = "";
                 if (!$('#nom').val() || !$('#cn').val() || !$('#yor').val()) {
                     alert("Complete * Marked Required Fields");
+                    code = "";
                 } else {
-                    var code = "SH" + String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val().slice(-2) + "_" + $('#cn').val();
+                    code = "SH" + String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val().slice(-2) + "_" + $('#cn').val();
                     if ($("#typeofvideo").val() == "Webseries") {
                         code += "_S" + String("0" + $('#nos').val()).slice(-2)
                     }
