@@ -184,7 +184,7 @@
                     alert("Complete * Marked Required Fields");
                     code = "";
                 } else {
-                    code = "SH" + String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val().slice(-2) + "_" + $('#cn').val();
+                    code = "SH" + String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val() + "_" + $('#cn').val();
                     if ($("#typeofvideo").val() == "Webseries") {
                         code += "_S" + String("0" + $('#nos').val()).slice(-2)
                     }
