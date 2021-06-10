@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div class="mb-3 col-md">
-                    <label class="form-label" id="l_nom">Name Of Webseries*</label>
+                    <label class="form-label text-capitalize" id="l_nom">Name Of Webseries*</label>
                     <input type="text" class="form-control" id="nom" autocomplete="off" required>
                 </div>
                 <div class="mb-3 col-md">
@@ -67,6 +67,7 @@
             <div class="text-center">
                 <a class="btn btn-primary mt-3" id="copy">Copy Code</a>
                 <button type="submit" class="btn btn-primary mt-3" id="download">Download</button>
+                <button class="btn btn-primary mt-3" onclick="this.form.reset()">Reset</button>
             </div>
 
         </form>
@@ -98,13 +99,13 @@
                 }
                 html = '<div class="col"><div class="input-group"><span class="input-group-text">Episode 01</span><input type="text" class="form-control" id="url1" required></div></div>'
                 for (i = 2; i <= noe; i++) {
-                    html += '<div class="col-4"><div class="input-group col-4"><span class="input-group-text">Episode ' + String("0" + i).slice(-2) + '</span><input type="text" class="form-control"  id="url' + i + '" required></div></div>';
+                    html += '<div class="col-6"><div class="input-group col-4"><span class="input-group-text">Episode ' + String("0" + i).slice(-2) + '</span><input type="text" class="form-control"  id="url' + i + '" required></div></div>';
                 }
                 $("#div_ep").html(html);
             });
             // $("#copy").click(function() {
             $('#detailsform').submit(function(e) {
-                // e.preventDefault();
+                e.preventDefault();
                 var noe = $("#noe").val();
                 var sub_noe = 3;
                 var mainText = "";
@@ -112,8 +113,8 @@
 
                 if ($("#typeofvideo").val() == "Webseries") {
                     videoDetails += " (Season " + String($("#nos").val()) + ")";
-                    videoDetails += "\n📙 Language : " + $("#lang").val() + "\n" + "💿 Quality : FULL HD \n" + "📤 Uploader : @ShowsHeist\n\n\n";
                 }
+                videoDetails += "\n📙 Language : " + $("#lang").val() + "\n" + "💿 Quality : FULL HD \n" + "📤 Uploader : @ShowsHeist\n\n\n";
                 var fileNamePrefix = getVideoCode();
                 mainText += fileNamePrefix + "\n\n" + videoDetails;
 
@@ -122,7 +123,7 @@
                     if ($("#typeofvideo").val() == "Movie") {
                         linkDetails += "🔥 WATCH NOW 🔥 - " + $("#url1").val();
                     } else {
-                        linkDetails += "Episode :: 1 - " + $("#url1").val();
+                        linkDetails += "EP :: 1 - " + $("#url1").val();
                     }
                 } else {
                     for (i = 1; i <= noe; i = (i + 3)) {
@@ -131,20 +132,17 @@
                         }
                         for (j = 0; j < sub_noe; j++) {
                             if (j == (sub_noe - 1)) {
-                                linkDetails += "Episode :: " + (i + j) + " - " + $(String("#url" + (i + j))).val();
+                                linkDetails += "EP :: " + (i + j) + " - " + $(String("#url" + (i + j))).val();
+                                linkDetails += "\n";
+                            }else{
+                                linkDetails += "EP :: " + (i + j) + " - " + $(String("#url" + (i + j))).val() + " | ";
                             }
-                            linkDetails += "Episode :: " + (i + j) + " - " + $(String("#url" + (i + j))).val() + " | ";
+                            
                         }
-                        linkDetails += "\n";
+                        
                     }
                 }
                 mainText += linkDetails;
-                // var temp = $('<input>').val(mainText).appendTo('body').select();
-                // document.execCommand('copy');
-                // $temp.remove();
-
-                alert("Text Copied");
-
                 download(fileNamePrefix, mainText);
             });
 
@@ -184,7 +182,7 @@
                     alert("Complete * Marked Required Fields");
                     code = "";
                 } else {
-                    code = "SH" + String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val() + "_" + $('#cn').val();
+                    code = String($('#lang').val()).charAt(0) + String($('#typeofvideo').val()).charAt(0) + $('#yor').val() + "_" + $('#cn').val();
                     if ($("#typeofvideo").val() == "Webseries") {
                         code += "_S" + String("0" + $('#nos').val()).slice(-2)
                     }
